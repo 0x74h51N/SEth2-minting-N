@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { parseEther } from "viem";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
-import { throwError } from "~~/utils/scaffold-eth/throwError";
+import { handleInputError } from "~~/utils/errorHandling";
 
 const ActionButton = (
   buttonText: string,
@@ -13,6 +13,10 @@ const ActionButton = (
   const [addr, setAddr] = useState<string>("");
   const [amount, setAmount] = useState<string>("0");
   const [amountB, setAmountB] = useState<string>("0");
+  const addressInputRef = useRef<HTMLInputElement | null>(null);
+  const amountInputRef = useRef<HTMLInputElement | null>(null);
+  const amountInputRefB = useRef<HTMLInputElement | null>(null);
+
   const handleAddrChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAddr(event.target.value);
   };
@@ -34,21 +38,21 @@ const ActionButton = (
     console.log(`${functionName} ${contractName} Token!`);
     if (showAddressInput) {
       if (!/^0x[0-9a-fA-F]{40}$/.test(addr.trim())) {
-        throwError("addr", "Please enter a valid address.");
+        handleInputError(addressInputRef, "INVALID_ADDRESS");
         return;
-      } else if (amount === "" || amount === "0") {
-        throwError("amount", "Amount field cannot be empty.");
+      } else if (amount !== "" && amount !== "0") {
+        handleInputError(amountInputRef, "AMOUNT_EMPTY");
         return;
       } else if (amount.includes(",")) {
-        throwError("amount", 'Use dot "." for decimal separator.');
+        handleInputError(amountInputRef, "DECIMAL_SEPARATOR");
         return;
       }
     } else {
-      if (amountB === "" || amountB === "0") {
-        throwError("amountB", "Amount field cannot be empty.");
+      if (amountB !== "" && amountB !== "0") {
+        handleInputError(amountInputRefB, "AMOUNT_EMPTY");
         return;
       } else if (amountB.includes(",")) {
-        throwError("amountB", 'Use dot "." for decimal separator.');
+        handleInputError(amountInputRefB, "DECIMAL_SEPARATOR");
         return;
       }
     }
@@ -67,13 +71,13 @@ const ActionButton = (
           {showAddressInput && (
             <>
               <p className="text">Address:</p>
-              <input placeholder="Wallet Address" id="addr" className="input" onChange={handleAddrChange} />
+              <input placeholder="Wallet Address" ref={addressInputRef} className="input" onChange={handleAddrChange} />
             </>
           )}
           <p className="text">Amount:</p>
           <input
             placeholder={`${contractName === "NVMToken" ? "NVM" : "NNN"} Token Amount`}
-            id={`${showAddressInput ? "amount" : "amountB"}`}
+            ref={showAddressInput ? amountInputRef : amountInputRefB}
             className="input"
             onChange={handleAmountChange}
           />

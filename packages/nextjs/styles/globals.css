@@ -30,3 +30,7 @@ p {
 .btn.btn-ghost {
   @apply shadow-none;
 }
+
+.red-border {
+  border: 2px solid red;
+}
