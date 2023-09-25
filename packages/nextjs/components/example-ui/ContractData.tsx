@@ -1,3 +1,5 @@
+export {};
+/*
 import { useEffect, useRef, useState } from "react";
 import Marquee from "react-fast-marquee";
 import { useAccount } from "wagmi";
@@ -8,28 +10,22 @@ import {
   useScaffoldEventHistory,
   useScaffoldEventSubscriber,
 } from "~~/hooks/scaffold-eth";
-
 const MARQUEE_PERIOD_IN_SEC = 5;
-
 export const ContractData = () => {
   const { address } = useAccount();
   const [transitionEnabled, setTransitionEnabled] = useState(true);
   const [isRightDirection, setIsRightDirection] = useState(false);
   const [marqueeSpeed, setMarqueeSpeed] = useState(0);
-
   const containerRef = useRef<HTMLDivElement>(null);
   const greetingRef = useRef<HTMLDivElement>(null);
-
   const { data: totalCounter } = useScaffoldContractRead({
     contractName: "YourContract",
     functionName: "totalCounter",
   });
-
   const { data: currentGreeting, isLoading: isGreetingLoading } = useScaffoldContractRead({
     contractName: "YourContract",
     functionName: "greeting",
   });
-
   useScaffoldEventSubscriber({
     contractName: "YourContract",
     eventName: "GreetingChange",
@@ -40,7 +36,6 @@ export const ContractData = () => {
       });
     },
   });
-
   const {
     data: myGreetingChangeEvents,
     isLoading: isLoadingEvents,
@@ -52,16 +47,11 @@ export const ContractData = () => {
     filters: { greetingSetter: address },
     blockData: true,
   });
-
   console.log("Events:", isLoadingEvents, errorReadingEvents, myGreetingChangeEvents);
-
   const { data: yourContract } = useScaffoldContract({ contractName: "YourContract" });
   console.log("yourContract: ", yourContract);
-
   const { showAnimation } = useAnimationConfig(totalCounter);
-
   const showTransition = transitionEnabled && !!currentGreeting && !isGreetingLoading;
-
   useEffect(() => {
     if (transitionEnabled && containerRef.current && greetingRef.current) {
       setMarqueeSpeed(
@@ -69,7 +59,6 @@ export const ContractData = () => {
       );
     }
   }, [transitionEnabled, containerRef, greetingRef]);
-
   return (
     <div className="flex flex-col justify-center items-center bg-[url('/assets/gradient-bg.png')] bg-[length:100%_100%] py-10 px-5 sm:px-0 lg:py-auto max-w-[100vw] ">
       <div
@@ -100,7 +89,7 @@ export const ContractData = () => {
 
         <div className="mt-3 border border-primary bg-neutral rounded-3xl text-secondary  overflow-hidden text-[116px] whitespace-nowrap w-full uppercase tracking-tighter font-bai-jamjuree leading-tight">
           <div className="relative overflow-x-hidden" ref={containerRef}>
-            {/* for speed calculating purposes */}
+            {// for speed calculating purposes }
             <div className="absolute -left-[9999rem]" ref={greetingRef}>
               <div className="px-4">{currentGreeting}</div>
             </div>
@@ -121,7 +110,6 @@ export const ContractData = () => {
             })}
           </div>
         </div>
-
         <div className="mt-3 flex items-end justify-between">
           <button
             className={`btn btn-circle btn-ghost border border-primary hover:border-primary w-12 h-12 p-1 bg-neutral flex items-center ${
@@ -146,3 +134,4 @@ export const ContractData = () => {
     </div>
   );
 };
+*/

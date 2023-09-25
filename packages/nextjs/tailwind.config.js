@@ -6,6 +6,7 @@ module.exports = {
   // DaisyUI theme colors
   daisyui: {
     themes: [
+      /*
       {
         scaffoldEth: {
           primary: "#93BBFB",
@@ -32,6 +33,7 @@ module.exports = {
           },
         },
       },
+      */
       {
         scaffoldEthDark: {
           primary: "#212638",
@@ -73,7 +75,7 @@ module.exports = {
           "base-200": "#f1f1f1",
           "base-300": "#d0d0d0",
           "base-content": "#212638",
-          info: "#93BBFB",
+          info: "#385183",
           success: "#34EEB6",
           warning: "#FFCF72",
           error: "#FF8863",
