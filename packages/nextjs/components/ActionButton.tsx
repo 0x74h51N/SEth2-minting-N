@@ -25,6 +25,11 @@ const ActionButton = (
     handleInputError(showAddressInput ? amountInputRef : amountInputRefB, undefined, false);
     showAddressInput ? setAmount(event.target.value) : setAmountB(event.target.value);
   };
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleButtonClick();
+    }
+  };
   const { writeAsync: asyncMint } = useScaffoldContractWrite({
     contractName,
     functionName: "mint",
@@ -68,7 +73,13 @@ const ActionButton = (
           {showAddressInput && (
             <>
               <p className="text">Address:</p>
-              <input placeholder="Wallet Address" ref={addressInputRef} className="input" onChange={handleAddrChange} />
+              <input
+                placeholder="Wallet Address"
+                ref={addressInputRef}
+                className="input"
+                onKeyDown={handleKeyDown}
+                onChange={handleAddrChange}
+              />
             </>
           )}
           <p>
@@ -111,6 +122,7 @@ const ActionButton = (
             ref={showAddressInput ? amountInputRef : amountInputRefB}
             className="input"
             onChange={handleAmountChange}
+            onKeyDown={handleKeyDown}
           />
           <br />
           <button className="button" onClick={handleButtonClick}>
