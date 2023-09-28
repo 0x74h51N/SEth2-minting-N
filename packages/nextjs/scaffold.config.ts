@@ -10,7 +10,8 @@ export type ScaffoldConfig = {
 };
 const scaffoldConfig = {
   // The network where your DApp lives in
-  targetNetwork: process.env.NEXT_PUBLIC_REACT_APP_ETHEREUM_NETWORK ? chains.bsc : chains.bscTestnet,
+  //targetNetwork: process.env.NEXT_PUBLIC_REACT_APP_ETHEREUM_NETWORK ? chains.bsc : chains.bscTestnet,
+  targetNetwork: chains.bscTestnet,
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect on the local network
   pollingInterval: 30000,
