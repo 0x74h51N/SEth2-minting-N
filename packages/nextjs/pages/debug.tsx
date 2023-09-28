@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import type { NextPage } from "next";
 import { useLocalStorage } from "usehooks-ts";
 import { MetaHeader } from "~~/components/MetaHeader";
@@ -15,9 +15,16 @@ const Debug: NextPage = () => {
     contractNames[1],
   );
 
+  const filteredContracts = useMemo(() => {
+    if (contractNames.length > 1) {
+      return [contractNames[1], contractNames[4]];
+    }
+    return [];
+  }, []);
+
   useEffect(() => {
     if (!contractNames.includes(selectedContract)) {
-      setSelectedContract(contractNames[0]);
+      setSelectedContract(contractNames[1]);
     }
   }, [selectedContract, setSelectedContract]);
 
@@ -31,46 +38,29 @@ const Debug: NextPage = () => {
           <>
             {contractNames.length > 1 && (
               <div className="flex flex-row gap-2 w-full max-w-7xl pb-1 px-6 lg:px-10 flex-wrap">
-                {contractNames.map(
-                  (contractName, index) =>
-                    (index === 1 || index === 4) && (
-                      <button
-                        className={`btn btn-secondary btn-sm normal-case font-thin ${
-                          contractName === selectedContract ? "bg-base-300" : "bg-base-100"
-                        }`}
-                        key={contractName}
-                        onClick={() => setSelectedContract(contractName)}
-                      >
-                        {contractName}
-                      </button>
-                    ),
-                )}
+                {filteredContracts.map(contractName => (
+                  <button
+                    className={`btn btn-secondary btn-sm normal-case font-thin ${
+                      contractName === selectedContract ? "bg-base-300" : "bg-base-100"
+                    }`}
+                    key={contractName}
+                    onClick={() => setSelectedContract(contractName)}
+                  >
+                    {contractName}
+                  </button>
+                ))}
               </div>
             )}
-            {contractNames.map(
-              (contractName, index) =>
-                (index === 1 || index === 4) && (
-                  <ContractUI
-                    key={contractName}
-                    contractName={contractName}
-                    className={contractName === selectedContract ? "" : "hidden"}
-                  />
-                ),
-            )}
+            {filteredContracts.map(contractName => (
+              <ContractUI
+                key={contractName}
+                contractName={contractName}
+                className={contractName === selectedContract ? "" : "hidden"}
+              />
+            ))}
           </>
         )}
       </div>
-
-      {/* <div className="text-center mt-8 bg-secondary p-10">
-        <h1 className="text-4xl my-0">Debug Contracts</h1>
-        <p className="text-neutral">
-          You can debug & interact with your deployed contracts here.
-          <br /> Check{" "}
-          <code className="italic bg-base-300 text-base font-bold [word-spacing:-0.5rem] px-1">
-            packages / nextjs / pages / debug.tsx
-          </code>{" "}
-        </p>
-      </div> */}
     </>
   );
 };
