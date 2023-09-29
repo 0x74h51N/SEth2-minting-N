@@ -1,8 +1,9 @@
 import React from "react";
 import NNNtab from "./NNNtab";
+import { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
 
-const HomePage = () => {
+const Home: NextPage = () => {
   return (
     <>
       <MetaHeader title="NNN Token" />
@@ -12,4 +13,4 @@ const HomePage = () => {
     </>
   );
 };
-export default HomePage;
+export default Home;
