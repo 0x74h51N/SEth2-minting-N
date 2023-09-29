@@ -70,55 +70,54 @@ const ActionButton = (
 
   return (
     <>
-      <div className={`grid grid-cols-1 lg:grid-cols-6 px-6 lg:px-10 lg:gap-12 w-full max-w-10xl my-10`}>
-        {" "}
-        {/*Ana genişlik yukarıda belirtiliyor.*/}
-        <div className="col-span-2 grid grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-10"></div>
-        <div className="col-span-1 lg:col-span-2 flex flex-col gap-6">
-          <div className="z-10">
-            <div className="bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 flex flex-col mt-10 relative">
-              <div className="h-[5rem] w-[12rem] bg-base-300 absolute self-start rounded-[22px] -top-[38px] -left-[1px] -z-10 py-[0.4rem] shadow-lg shadow-base-300">
-                <div className="flex items-center justify-center space-x-2">
-                  <p className="antialiased font-bold my-0 text-xl bold">{title}</p>
+      <div className="flex flex-col py-8 lg:py-12 justify-center items-center">
+        <div className={`grid lg:grid-cols-3 px-6 gap-4 lg:px-10 lg:gap-1 min-w-8x1 w-full max-w-8xl my-10`}>
+          <div className="col-start-2 col-end-3 flex flex-col gap-5">
+            <div className="z-10">
+              <div className="bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 flex flex-col mt-5 relative">
+                <div className="h-[5rem] w-[20rem] bg-base-300 absolute self-start rounded-[22px] -top-[45px] -left-[1px] -z-10 py-[0.4rem] shadow-lg shadow-base-300">
+                  <div className="flex items-center justify-center space-x-0">
+                    <p className="antialiased font-bold my-0 text-2xl bold">{title}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="p-5 divide-y divide-base-300">
-                <div>
-                  {showAddressInput && (
-                    <>
-                      <p className="text">Address:</p>
-                      <div>
-                        <div className="flex border-2 border-base-200 bg-base-100 rounded-full text-accent ">
-                          <input
-                            placeholder="Wallet Address"
-                            ref={addressInputRef}
-                            className="input input-ghost focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-500"
-                            onKeyDown={handleKeyDown}
-                            onChange={handleAddrChange}
-                          />
-                        </div>
-                      </div>
-                    </>
-                  )}
+                <div className="p-5 divide-y divide-base-300 static">
                   <div>
-                    <p className="text">Amount:</p>
-                    <div className="flex border-2 border-base-200 bg-base-100 rounded-full text-accent">
-                      <input
-                        placeholder={`${contractName === "NVMToken" ? "NVM" : "NNN"} Token Amount`}
-                        ref={showAddressInput ? amountInputRef : amountInputRefB}
-                        className="input input-ghost focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400"
-                        onChange={handleAmountChange}
-                        onKeyDown={handleKeyDown}
-                      />
+                    {showAddressInput && (
+                      <>
+                        <p className="text">Address:</p>
+                        <div>
+                          <div className="flex h-[3.2rem] min-h-[3.2rem] border-2 border-base-200 bg-base-200 rounded-full text-accent ">
+                            <input
+                              placeholder="Wallet Address"
+                              ref={addressInputRef}
+                              className="input input-ghost focus:bg-transparent focus:text-gray-400 h-[3rem] min-h-[3rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-500"
+                              onKeyDown={handleKeyDown}
+                              onChange={handleAddrChange}
+                            />
+                          </div>
+                        </div>
+                      </>
+                    )}
+                    <div>
+                      <p className="text">Amount:</p>
+                      <div className="flex h-[3.2rem] min-h-[3.2rem] border-2 border-base-200 bg-base-200 rounded-full text-accent">
+                        <input
+                          placeholder={`${contractName === "NVMToken" ? "NVM" : "NNN"} Token Amount`}
+                          ref={showAddressInput ? amountInputRef : amountInputRefB}
+                          className="input input-ghost focus:bg-transparent focus:text-gray-400  h-[3rem] min-h-[3rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400"
+                          onChange={handleAmountChange}
+                          onKeyDown={handleKeyDown}
+                        />
+                      </div>
+                      <br />
+                      <button
+                        className="btn btn-secondary btn-sm mr-4"
+                        disabled={writeDisabled}
+                        onClick={handleButtonClick}
+                      >
+                        {buttonText2}
+                      </button>
                     </div>
-                    <br />
-                    <button
-                      className="btn btn-secondary btn-sm mt-2"
-                      disabled={writeDisabled}
-                      onClick={handleButtonClick}
-                    >
-                      {buttonText2}
-                    </button>
                   </div>
                 </div>
               </div>
@@ -126,7 +125,6 @@ const ActionButton = (
           </div>
         </div>
       </div>
-
       {/* 
               </div>
             </div>
