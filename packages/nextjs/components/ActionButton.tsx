@@ -1,10 +1,12 @@
 import React, { useRef, useState } from "react";
 import { parseEther } from "viem";
+import { useNetwork } from "wagmi";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { handleInputError } from "~~/utils/errorHandling";
+import { getTargetNetwork } from "~~/utils/scaffold-eth";
 
 const ActionButton = (
-  buttonText: string,
+  title: string,
   buttonText2: string,
   functionName: "mint" | "burn",
   contractName: "NNNToken" | "NVMToken",
@@ -16,6 +18,9 @@ const ActionButton = (
   const addressInputRef = useRef<HTMLInputElement | null>(null);
   const amountInputRef = useRef<HTMLInputElement | null>(null);
   const amountInputRefB = useRef<HTMLInputElement | null>(null);
+
+  const { chain } = useNetwork();
+  const writeDisabled = !chain || chain?.id !== getTargetNetwork().id;
 
   const handleAddrChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     handleInputError(addressInputRef, undefined, false);
@@ -64,73 +69,69 @@ const ActionButton = (
   };
 
   return (
-    <div className="mainWrapper">
-      <div className="wrapper">
-        <div id="title2" className="title">
-          <p>{buttonText}</p>
-        </div>
-        <div className="mainDiv">
-          {showAddressInput && (
-            <>
-              <p className="text">Address:</p>
-              <input
-                placeholder="Wallet Address"
-                ref={addressInputRef}
-                className="input"
-                onKeyDown={handleKeyDown}
-                onChange={handleAddrChange}
-              />
-            </>
-          )}
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer accumsan pulvinar lectus. Aenean dapibus,
-            tortor nec feugiat feugiat, mauris magna dictum felis, ut semper nisl urna sit amet odio. Etiam sit amet
-            ante ultricies, gravida ante nec, suscipit ipsum. Pellentesque non turpis vestibulum tortor facilisis dictum
-            eget at tellus. Ut tempor vestibulum est, sed iaculis enim blandit nec. Sed suscipit nec libero nec
-            vehicula. Praesent laoreet purus id ligula sagittis accumsan. Vestibulum erat tortor, ullamcorper eu lacus
-            et, auctor facilisis tortor. Praesent a metus commodo, pretium diam ac, convallis diam. Etiam commodo lorem
-            ut venenatis suscipit. Nunc finibus laoreet rhoncus. Nunc rutrum vel justo sagittis rhoncus. Nunc laoreet
-            dignissim ipsum a condimentum. Etiam at leo eget massa placerat posuere nec et neque. Nam at mi ut eros
-            luctus commodo. Nam quam urna, dapibus sed odio id, luctus dignissim est. Ut sagittis dolor justo, in
-            placerat sapien rhoncus vel. Vivamus consectetur orci id arcu rutrum, nec tincidunt nulla facilisis.
-            Pellentesque vitae blandit neque, sed condimentum neque. Donec maximus ultricies sagittis. In dictum neque
-            ipsum, vel finibus sem auctor eu. Suspendisse et nisl ut dolor auctor suscipit nec ut ligula. Donec sagittis
-            lacus tellus, vitae commodo nisi laoreet quis. In faucibus consequat maximus. Pellentesque laoreet eu lacus
-            congue placerat. Cras rhoncus id neque sit amet aliquam. Phasellus ornare quam at ligula viverra, eu
-            sagittis dui placerat. Proin convallis mollis ligula, ac pulvinar sapien viverra vitae. Donec pellentesque
-            metus elit, at laoreet erat mattis quis. Maecenas ut dui id risus consectetur scelerisque. Integer non
-            mauris ullamcorper, imperdiet eros sit amet, fringilla erat. Donec id tortor vel massa blandit molestie ut
-            quis tortor. Praesent sed leo at enim porttitor bibendum sed vitae nisl. Suspendisse eget mollis ex. Integer
-            porta felis vel dui hendrerit, id sagittis augue facilisis. Nam pellentesque mauris ac nisi finibus lacinia.
-            Pellentesque aliquam dapibus convallis. Fusce dignissim maximus erat, non gravida odio tempus quis. Donec
-            lobortis magna in erat varius, non posuere enim maximus. Morbi sed nibh sagittis, dictum velit vel, feugiat
-            lorem. Praesent vitae eleifend sapien. Vestibulum aliquam, ipsum non venenatis scelerisque, sem nulla
-            posuere lacus, vitae rhoncus velit risus et felis. Proin elit neque, vestibulum vel volutpat vitae, ornare
-            ut libero. Curabitur faucibus dolor a nibh bibendum porttitor. Nullam ac nulla et nisl finibus accumsan
-            dignissim sed sem. Aenean quis iaculis urna. Aenean efficitur justo vel augue malesuada condimentum. Nunc ac
-            rutrum eros, quis eleifend orci. Curabitur luctus consectetur diam sed convallis. Suspendisse ut aliquet
-            lorem. Cras venenatis ultrices libero ac volutpat. Integer vestibulum tempor egestas. Sed accumsan augue sed
-            maximus scelerisque. Vestibulum ullamcorper, purus laoreet ultrices cursus, eros leo finibus massa, non
-            malesuada ligula lacus sit amet augue. Curabitur magna nulla, rhoncus non nibh ut, iaculis hendrerit mauris.
-            Fusce imperdiet ligula venenatis, placerat dolor in, dapibus ipsum. Vestibulum arcu velit, malesuada nec
-            dictum eu, egestas ut lorem. Quisque iaculis iaculis turpis, ut gravida ex aliquam sit amet. Cras pharetra
-            commodo ullamcorper. Ut ligula metus, luctus eu imperdiet vel, laoreet vel elit.
-          </p>
-          <p className="text">Amount:</p>
-          <input
-            placeholder={`${contractName === "NVMToken" ? "NVM" : "NNN"} Token Amount`}
-            ref={showAddressInput ? amountInputRef : amountInputRefB}
-            className="input"
-            onChange={handleAmountChange}
-            onKeyDown={handleKeyDown}
-          />
-          <br />
-          <button className="button" onClick={handleButtonClick}>
-            {buttonText2}
-          </button>
+    <>
+      <div className="flex flex-col py-8 lg:py-12 justify-center items-center">
+        <div className={`grid lg:grid-cols-3 px-6 gap-4 lg:px-10 lg:gap-1 min-w-8x1 w-full max-w-8xl my-10`}>
+          <div className="col-start-2 col-end-3 flex flex-col gap-5">
+            <div className="z-10">
+              <div className="bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 flex flex-col mt-5 relative">
+                <div className="h-[5rem] w-[20rem] bg-base-300 absolute self-start rounded-[22px] -top-[45px] -left-[1px] -z-10 py-[0.4rem] shadow-lg shadow-base-300">
+                  <div className="flex items-center justify-center space-x-0">
+                    <p className="antialiased font-bold my-0 text-2xl bold">{title}</p>
+                  </div>
+                </div>
+                <div className="p-5 divide-y divide-base-300 static">
+                  <div>
+                    {showAddressInput && (
+                      <>
+                        <p className="text">Address:</p>
+                        <div>
+                          <div className="flex h-[3.2rem] min-h-[3.2rem] border-2 border-base-200 bg-base-200 rounded-full text-accent ">
+                            <input
+                              placeholder="Wallet Address"
+                              ref={addressInputRef}
+                              className="input input-ghost focus:bg-transparent focus:text-gray-400 h-[3rem] min-h-[3rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-500"
+                              onKeyDown={handleKeyDown}
+                              onChange={handleAddrChange}
+                            />
+                          </div>
+                        </div>
+                      </>
+                    )}
+                    <div>
+                      <p className="text">Amount:</p>
+                      <div className="flex h-[3.2rem] min-h-[3.2rem] border-2 border-base-200 bg-base-200 rounded-full text-accent">
+                        <input
+                          placeholder={`${contractName === "NVMToken" ? "NVM" : "NNN"} Token Amount`}
+                          ref={showAddressInput ? amountInputRef : amountInputRefB}
+                          className="input input-ghost focus:bg-transparent focus:text-gray-400  h-[3rem] min-h-[3rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400"
+                          onChange={handleAmountChange}
+                          onKeyDown={handleKeyDown}
+                        />
+                      </div>
+                      <br />
+                      <button
+                        className="btn btn-secondary btn-sm mr-4"
+                        disabled={writeDisabled}
+                        onClick={handleButtonClick}
+                      >
+                        {buttonText2}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+      {/* 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> */}
+    </>
   );
 };
 
