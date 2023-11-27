@@ -1,5 +1,5 @@
 import React from "react";
-import ActionButton from "../components/ActionButton";
+import FunctionContainer from "../components/FunctionContainer";
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
 
@@ -8,8 +8,8 @@ const NNNtab: NextPage = () => {
     <>
       <MetaHeader title="NNN Token" />
       <div>
-        {ActionButton("💵 Mint NNN", "💵 Mint", "mint", "NNNToken", true)}
-        {ActionButton("🔥 Burn NNN", "🔥 Burn", "burn", "NNNToken", false)}
+        {FunctionContainer("💵 Mint NNN", "💵 Mint", "mint", "NNNToken", true)}
+        {FunctionContainer("🔥 Burn NNN", "🔥 Burn", "burn", "NNNToken", false)}
       </div>
     </>
   );
