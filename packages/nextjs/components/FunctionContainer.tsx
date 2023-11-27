@@ -5,7 +5,7 @@ import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { handleInputError } from "~~/utils/errorHandling";
 import { getTargetNetwork } from "~~/utils/scaffold-eth";
 
-const ActionButton = (
+const FunctionContainer = (
   title: string,
   buttonText2: string,
   functionName: "mint" | "burn",
@@ -70,69 +70,58 @@ const ActionButton = (
 
   return (
     <>
-      <div className="flex flex-col py-8 lg:py-12 justify-center items-center">
-        <div className={`grid lg:grid-cols-3 px-6 gap-4 lg:px-10 lg:gap-1 min-w-8x1 w-full max-w-8xl my-10`}>
-          <div className="col-start-2 col-end-3 flex flex-col gap-5">
-            <div className="z-10">
-              <div className="bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300 flex flex-col mt-5 relative">
-                <div className="h-[5rem] w-[20rem] bg-base-300 absolute self-start rounded-[22px] -top-[45px] -left-[1px] -z-10 py-[0.4rem] shadow-lg shadow-base-300">
-                  <div className="flex items-center justify-center space-x-0">
-                    <p className="antialiased font-bold my-0 text-2xl bold">{title}</p>
-                  </div>
-                </div>
-                <div className="p-5 divide-y divide-base-300 static">
-                  <div>
-                    {showAddressInput && (
-                      <>
-                        <p className="text">Address:</p>
-                        <div>
-                          <div className="flex h-[3.2rem] min-h-[3.2rem] border-2 border-base-200 bg-base-200 rounded-full text-accent ">
-                            <input
-                              placeholder="Wallet Address"
-                              ref={addressInputRef}
-                              className="input input-ghost focus:bg-transparent focus:text-gray-400 h-[3rem] min-h-[3rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-500"
-                              onKeyDown={handleKeyDown}
-                              onChange={handleAddrChange}
-                            />
-                          </div>
-                        </div>
-                      </>
-                    )}
+      <div className="flex flex-col pt-20 justify-center items-center w-full h-auto px-8">
+        <div className="flex flex-col relative w-[35svw] min-w-[500px] max-sm:min-w-[350px] max-sm:w-full items-center justify-center">
+          <div className="flex h-[5rem] w-[14rem] max-xl:w-[10rem] pr-1 bg-base-300 absolute self-start rounded-[22px] -top-[45px] -left-[1px] shadow-lg shadow-base-300">
+            <p className="antialiased font-bold text-2xl max-xl:text-lg bold m-2 text-center w-full">{title}</p>
+          </div>
+          <div className="relative w-full z-10 p-5 divide-y bg-base-100 rounded-3xl shadow-md shadow-secondary border border-base-300">
+            <div className="flex flex-col gap-6">
+              <div>
+                {showAddressInput && (
+                  <>
+                    <p className="text my-1">Address:</p>
                     <div>
-                      <p className="text">Amount:</p>
-                      <div className="flex h-[3.2rem] min-h-[3.2rem] border-2 border-base-200 bg-base-200 rounded-full text-accent">
+                      <div className="flex min-h-[3.2rem] border-2 border-base-200 bg-base-200 rounded-2xl text-accent">
                         <input
-                          placeholder={`${contractName === "NVMToken" ? "NVM" : "NNN"} Token Amount`}
-                          ref={showAddressInput ? amountInputRef : amountInputRefB}
-                          className="input input-ghost focus:bg-transparent focus:text-gray-400  h-[3rem] min-h-[3rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400"
-                          onChange={handleAmountChange}
+                          placeholder="Wallet Address"
+                          ref={addressInputRef}
+                          className="input input-ghost focus:bg-transparent focus:text-gray-400 h-[3rem] min-h-[3rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-500 rounded-2xl"
                           onKeyDown={handleKeyDown}
+                          onChange={handleAddrChange}
                         />
                       </div>
-                      <br />
-                      <button
-                        className="btn btn-secondary btn-sm mr-4"
-                        disabled={writeDisabled}
-                        onClick={handleButtonClick}
-                      >
-                        {buttonText2}
-                      </button>
                     </div>
-                  </div>
+                  </>
+                )}
+              </div>
+              <div>
+                <p className="text my-1">Amount:</p>
+                <div className="flex min-h-[3.2rem] border-2 border-base-200 bg-base-200 rounded-2xl text-accent">
+                  <input
+                    placeholder={`${contractName === "NVMToken" ? "NVM" : "NNN"} Token Amount`}
+                    ref={showAddressInput ? amountInputRef : amountInputRefB}
+                    className="input input-ghost focus:bg-transparent focus:text-gray-400  h-[3rem] min-h-[3rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-400 rounded-2xl"
+                    onChange={handleAmountChange}
+                    onKeyDown={handleKeyDown}
+                  />
                 </div>
               </div>
+            </div>
+            <div className="w-full flex justify-end border-none mt-4">
+              <button
+                className="btn btn-secondary btn-sm rounded-xl w-[110px] h-[40px]"
+                disabled={writeDisabled}
+                onClick={handleButtonClick}
+              >
+                {buttonText2}
+              </button>
             </div>
           </div>
         </div>
       </div>
-      {/* 
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
     </>
   );
 };
 
-export default ActionButton;
+export default FunctionContainer;
